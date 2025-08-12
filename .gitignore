@@ -1,0 +1,22 @@
+# Java / Spring Boot
+/backspring/target/
+*.log
+*.class
+*.jar
+
+# Node / React
+/frontreact/node_modules/
+.frontend_build/
+
+# Maven
+.mvn/
+.settings/
+.idea/
+
+# OS / editor stuff
+.DS_Store
+*.iml
+.vscode/
+
+# Docker
+**/.env
