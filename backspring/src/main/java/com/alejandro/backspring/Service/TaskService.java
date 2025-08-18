@@ -16,8 +16,10 @@ public class TaskService {
         this.taskRepository=taskRepository;
     }
 
-    public List<Task> getAllTaskProject (Project project){
+    public List<Task> getAllTaskProject (Integer id){
 
+        Project project= new Project();
+        project.setId(id);
         return taskRepository.findbyProject(project);   
     }
     

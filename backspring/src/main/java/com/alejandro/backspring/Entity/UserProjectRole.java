@@ -13,19 +13,25 @@ import lombok.*;
 @IdClass(UserProjectRoleId.class)
 
 public class UserProjectRole {
-    @Id
+  
+    
+    @EmbeddedId
+    private UserProjectRoleId id;
+
     @ManyToOne
+    @MapsId("user")
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Id
     @ManyToOne
+    @MapsId("project")
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @Id
     @ManyToOne
+    @MapsId("role")
     @JoinColumn(name = "role_id")
     private Role role;
 
+    
 }

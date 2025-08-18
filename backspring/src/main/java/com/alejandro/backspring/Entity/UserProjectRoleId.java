@@ -1,21 +1,28 @@
 package com.alejandro.backspring.Entity;
+
 import java.io.Serializable;
 import java.util.Objects;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Embeddable
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserProjectRoleId implements Serializable {
+
+    @Column(name = "user_id")
     private int user;
+
+    @Column(name = "project_id")
     private int project;
+
+    @Column(name = "role_id")
     private int role;
 
-    public UserProjectRoleId() {}
-
-    public UserProjectRoleId(int user, int project, int role) {
-        this.user = user;
-        this.project = project;
-        this.role = role;
-    }
-
-    // equals and hashCode override (important)
+    // equals y hashCode (important for complex PK)
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -30,4 +37,6 @@ public class UserProjectRoleId implements Serializable {
     public int hashCode() {
         return Objects.hash(user, project, role);
     }
+
+    
 }

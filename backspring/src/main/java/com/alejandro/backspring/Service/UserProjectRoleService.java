@@ -4,9 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.alejandro.backspring.Entity.Project;
-import com.alejandro.backspring.Entity.User;
 import com.alejandro.backspring.Entity.UserProjectRole;
+import com.alejandro.backspring.Entity.UserProjectRoleId;
 import com.alejandro.backspring.Repository.UserProjectRoleRepository;
 
 @Service
@@ -17,20 +16,34 @@ public class UserProjectRoleService {
     public UserProjectRoleService (UserProjectRoleRepository userProjectRoleRepository){
         this.userProjectRoleRepository=userProjectRoleRepository;
     }
+
+    public UserProjectRole assignRole(UserProjectRole userProjectRole) {
+        // avoid duplicates
+        UserProjectRoleId id = new UserProjectRoleId(
+            userProjectRole.getUser().getId(),
+            userProjectRole.getProject().getId(),
+            userProjectRole.getRole().getId()
+        );
+        if (userProjectRoleRepository.existsById(id)) {
+            throw new RuntimeException("This user already has this role in this project.");
+        }
+        userProjectRole.setId(id);
+        return userProjectRoleRepository.save(userProjectRole);
+    }
     
     //get all user+Role+Project 
     public List<UserProjectRole> getAllUserProjectRoles() {
         return userProjectRoleRepository.findAll();
     }
 
-    //take all project of a user + role
-    public List<UserProjectRole> getProjectsByUser(User user) {
-        return userProjectRoleRepository.findByUser(user);
+    //get all project of a user
+    public List<UserProjectRole> getProjectsByUser(Integer UserId) {
+        return userProjectRoleRepository.findUserProjectByUser(UserId);
     }
 
-    //take all user + role of a project
-    public List<UserProjectRole> getUsersByProject(Project project){
-        return userProjectRoleRepository.findByProject(project);
+    //get all user + role of a project
+    public List<UserProjectRole> getUsersByProject(Integer projectId){
+        return userProjectRoleRepository.findUserProjectByProject(projectId);
     }
 
     
